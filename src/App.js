@@ -1,63 +1,53 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { CardList } from './components/card-list/card-list.component';
-import { SearchBox } from './components/search-box/search-box.component';
+import { CardList } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/search-box/search-box.component";
 
-import './App.css';
+import "./App.css";
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
-    
+
     this.state = {
       monsters: [],
-      searchField: ""
-
-
-    }
+      searchField: "",
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     fetch("https://jsonplaceholder.typicode.com/users")
-    .then(response => response.json())
-    .then(users => this.setState({ monsters: users }));
+      .then((response) => response.json())
+      .then((users) => this.setState({ monsters: users }));
   }
-
 
   handleChange = (e) => {
-    this.setState({ searchField: e.target.value})
-  }
-
+    this.setState({ searchField: e.target.value });
+  };
 
   render() {
-
-    const {monsters, searchField} = this.state; 
+    const { monsters, searchField } = this.state;
     // Cách khai báo khác
     // const monsters = this.state.monsters;
     // const searchField = this.state.searchField;
 
-
     //Hàm filteredMonsters: cập nhật state searchField khi nhập, chọn filter() monsters khi includes searchField ==> show ra CardList
-    const filteredMonsters = monsters.filter(monster => (
+    const filteredMonsters = monsters.filter((monster) =>
       monster.name.toLowerCase().includes(searchField.toLowerCase())
-    ))
+    );
 
     return (
       <div className="App">
-
         <h1>MONSTERS ROLODEX</h1>
-        <SearchBox 
-          placeholder = "Search Monsters"
-          handleChange = {this.handleChange}
+        <SearchBox
+          placeholder="Search Monsters"
+          handleChange={this.handleChange}
         />
 
-        
-        <CardList monsters = {filteredMonsters}/>
-          
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
 }
-
 
 export default App;
